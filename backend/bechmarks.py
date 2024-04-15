@@ -7,7 +7,7 @@ import glob
 import random
 import numpy as np
 import tqdm
-import pickle
+import json
 from bson.binary import Binary
 '''
     Run benchmark of system
@@ -46,7 +46,7 @@ def insert_users_into_db(path:str):
             feats = CORE_CONTROLLER.instance.extract_features(enroll_bytes)
             user_testing_db.insert_one({
                 "username": user,
-                "features": Binary(pickle.dumps(feats, protocol=2))
+                "features": Binary(json.dumps(feats, protocol=2))
             })
     return acept_users, reject_users
 def compute_eer(scores, labels, threshold):
@@ -81,7 +81,7 @@ def verify_users(path:str,
             max_score = 0
             user_ = ''
             for user_db in users_db:
-                score = CORE_CONTROLLER.instance.compute_score(feat_test,  pickle.loads(user_db['features']))
+                score = CORE_CONTROLLER.instance.compute_score(feat_test,  json.loads(user_db['features']))
                 if score > max_score:
                     max_score = score
                     user_ = user_db['username']
@@ -101,7 +101,7 @@ def verify_users(path:str,
             max_score = 0
             user_ = ''
             for user_db in users_db:
-                score = CORE_CONTROLLER.instance.compute_score(feat_test,  pickle.loads(user_db['features']))
+                score = CORE_CONTROLLER.instance.compute_score(feat_test,  json.loads(user_db['features']))
                 if score > max_score:
                     max_score = score
                     user_ = user_db['username']

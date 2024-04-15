@@ -33,7 +33,9 @@ def get_extractor(channel:int,
             path: path to pretrained model
             device: device for computing
     '''
-    assert channel in [1024,512,256,128]
+    #assert channel in [1024,512,256,128]
+    if channel not in [1024, 512, 256, 128]:
+        raise ValueError('Channel must be one of [1024, 512, 256, 128]')
     extractor = EmbeddingExtractor(C=channel,
                                    device=device)
     try:

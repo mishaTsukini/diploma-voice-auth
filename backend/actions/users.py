@@ -2,14 +2,10 @@ from fastapi import UploadFile
 from initlization import core_controller
 from database import user_db, user_testing_db
 from bson.binary import Binary
-import pickle
+import json
 from model.error_code import ErrorStatusCode
 import traceback
 from typing import List
-
-
-# Store 2 fields
-
 
 
 def get_users_internal():
@@ -61,7 +57,7 @@ async def create_user_internal(user:str,
         id = user_db.insert_one({
             "username": user,
             "user_id": user.lower(),
-            "features": Binary(pickle.dumps(embedding,protocol=2))
+            "features": Binary(json.dumps(embedding,protocol=2))
         })
         if id is not None:
             return {
@@ -104,7 +100,7 @@ async def verify_user_interal(data: UploadFile):
     feat_db = []
     users = []
     for user in user_cursors:
-        enrolled_embedding = pickle.loads(user["features"])
+        enrolled_embedding = json.loads(user["features"])
         feat_db.append(enrolled_embedding)
         users.append(user["username"])
     # print(feat_db)
