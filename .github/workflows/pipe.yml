@@ -45,6 +45,7 @@ jobs:
           npx eslint . --ext .js,.jsx,.ts,.tsx  # Adjust extensions as needed
 
   build-and-push:
+    needed: security-scan
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -59,8 +60,8 @@ jobs:
       - name: Build and push Docker image (frontend)
         uses: docker/build-push-action@v2
         with:
-          context: .
-          file: ./frontend/Dockerfile
+          context: ./frontend
+          file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/frontend-diploma-gzigangirov:latest,${{ secrets.DOCKERHUB_USERNAME }}/frontend-diploma-gzigangirov:${{ github.sha }}
 
@@ -68,8 +69,8 @@ jobs:
       - name: Build and push Docker image (backend)
         uses: docker/build-push-action@v2
         with:
-          context: .
-          file: ./backend/Dockerfile
+          context: ./backend
+          file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/backend-diploma-gzigangirov:latest,${{ secrets.DOCKERHUB_USERNAME }}/backend-diploma-gzigangirov:${{ github.sha }}
 
