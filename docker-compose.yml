@@ -10,9 +10,9 @@ services:
       - mongodb:/data/db
     
   backend:
-    build:
-      dockerfile: Dockerfile
-      context: "./backend"
+    # build:
+    #   dockerfile: Dockerfile
+    #   context: "./backend"
     container_name: authentication-services
     environment:
       - MONGO_HOST=mongodb
@@ -25,9 +25,9 @@ services:
       - ./backend:/app
     
   frontend:
-    build:
-      dockerfile: Dockerfile
-      context: "./frontend"
+    # build:
+    #   dockerfile: Dockerfile
+    #   context: "./frontend"
     container_name: frontend-ui-app
     ports:
       - 3000:3000
