@@ -45,7 +45,7 @@ jobs:
           npx eslint . --ext .js,.jsx,.ts,.tsx  # Adjust extensions as needed
 
   build-and-push:
-    needed: security-scan
+    needs: security-scan
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
