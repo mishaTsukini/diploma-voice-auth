@@ -1,0 +1,43 @@
+version: '3'
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb-app
+    restart: unless-stopped
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb:/data/db
+    
+  backend:
+    build:
+      dockerfile: Dockerfile
+      context: "./backend"
+    container_name: authentication-services
+    environment:
+      - MONGO_HOST=mongodb
+      - MONGO_PORT=27017
+    ports:
+      - 8000:8000
+    depends_on:
+      - mongodb
+    volumes:
+      - ./backend:/app
+    
+  frontend:
+    build:
+      dockerfile: Dockerfile
+      context: "./frontend"
+    container_name: frontend-ui-app
+    ports:
+      - 3000:3000
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+
+    environment:
+      - API_HOST=backend
+      - API_PORT=8000
+volumes:
+  mongodb:
