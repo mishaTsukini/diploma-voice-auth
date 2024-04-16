@@ -4,7 +4,7 @@ var API_PORT = process.env.API_PORT;
 if (API_HOST === undefined){
     API_HOST = "90.156.208.248"
 }
-if (API_PORT === undefined){s
+if (API_PORT === undefined){
     API_PORT = "8000"
 }
 const Configs = {
