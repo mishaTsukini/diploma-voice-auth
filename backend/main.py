@@ -9,12 +9,12 @@ server_api.include_router(api_router, prefix='/api')
 
 
 configs = {
-    'host': 'localhost',
+    'host': '90.156.208.248',
     'port': 8000,
 }
 origins = [
-    "http://localhost:3000",
-    "localhost:3000"
+    "http://90.156.208.248:3000",
+    "90.156.208.248:3000"
 ]
 server_api.add_middleware(
     CORSMiddleware,
