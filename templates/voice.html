@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Голосовая аутентификация</title>
+  <link rel="stylesheet" type="text/css" href="../static/stylesheets/semantic.min.css" />
+  <link rel="stylesheet" type="text/css" href="../static/stylesheets/example.css" />
+
+</head>
+
+<body class="exampleBody" data-url="{{ url_for('voice') }}">
+  <div id="mainColumn" class="ui middle aligned center aligned grid">
+    <div id="mainForm" class="ui large form">
+      <h2 class="ui center aligned icon header loginText">
+        <img src="{{ url_for('static', filename='images/makefg.png')}}" class="ui circular icon loginLogo">
+        Голосовая аутентификация
+      </h2>
+
+      <div class="ui segment secondColor">
+
+        <div id="enrollmentMessage" class="ui message">
+          <div class="ui center aligned header">
+            Регистрация голосовой печати пользователя
+          </div>
+        </div>
+
+        <div id="waveform"></div>
+
+        <button id="startRecButton" class="fluid ui button">
+          <i class="microphone icon"></i>
+          Начать запись
+        </button>
+        <button id="stopRecButton" class="fluid ui button">
+          <i class="microphone slash icon"></i>
+          Остановить запись
+        </button>
+
+        <div id="environmentMessage" class="ui red icon message">
+          <i class="notched circle loading icon"></i>
+          <div class="content">
+            <div class="header">
+              Сканирование в поисках звуков окружающей среды
+            </div>
+            <p id="recordBody">Пожалуйста, сохраняйте тишину в течение 5 секунд </p>
+          </div>
+        </div>
+
+        <div id="vadMessage" class="ui yellow icon message">
+          <i class="notched circle loading icon"></i>
+          <div class="content">
+            <div class="header">
+              Анализ аудио
+            </div>
+            <p id="recordBody">Сопоставление слов с генерируемыми</p>
+          </div>
+        </div>
+
+        <div id="passphraseMessage" class="ui icon message">
+          <i class="shield alternate icon"></i>
+          <div class="content">
+            <div class="header">
+              Пожалуйста, произнесите следующее слова
+            </div>
+            <p id="randomPassphrase"> {{ passphrase }} </p>
+          </div>
+        </div>
+
+        <div id="acceptMessage" class="ui positive message">
+          <i id="close_button_accept" class="close icon"></i>
+          <div class="header">
+            Успешно
+          </div>
+          <p>Ваш образец голоса был успешно создан.</p>
+        </div>
+
+        <div id="rejectMessage" class="ui negative message">
+          <i id="close_button_reject" class="close icon"></i>
+          <div class="header">
+            Ваш образец голоса не создан.
+          </div>
+          <p>Возможны следующие причины:
+            <ul class="list">
+              <li>Слова, которые вы произнесли, не совсем корректны.</li>
+              <li>YandexSpeechKit не смог разобрать аудио.</li>
+              <li>Не получен ответ от YandexSpeechKit.</li>
+            </ul>
+          </p>
+        </div>       
+
+      </div>
+      <div id="enrollmentComplete" class="ui bottom attached positive message">
+        <i class="icon succesful"></i>
+       Запись голосового снимка прошла успешно! <a href="/auth">Аутентифицируйтесь здесь</a>.
+      </div>
+
+      <div id="authenticationComplete" class="ui bottom attached positive message">
+        <i class="icon succesful"></i>
+       Вы успешно аутентифицированы! <a href="/">Вернуться на главную страницу</a>.
+      </div>
+
+      <div id="authenticationInComplete" class="ui bottom attached negative message">
+        <i class="icon succesful"></i>
+       Ваш голосовой снимок не совпадает! <a href="/">Вернуться на главную страницу</a>.
+      </div>
+
+    </div>
+  </div>
+
+  <div class="ui inverted vertical footer segment form-page">
+    <div class="ui center aligned container">
+      - VoiceAuth by Гизар Зигангиров -
+    </div>
+  </div>
+</body>
+
+<script src="https://unpkg.com/wavesurfer.js@6.0.0"></script>
+<script src="../static/javascript/p5.min.js"></script>
+<script src="../static/javascript/p5.sound.min.js"></script>
+<script src="../static/javascript/p5.dom.min.js"></script>
+<script src="../static/javascript/wavesurfer.microphone.min.js"></script>
+<script src="../static/javascript/voice.js"></script>
+</html>
